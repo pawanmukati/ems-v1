@@ -26,12 +26,14 @@ if($_SESSION['ROLE']=="admin" || $_SESSION['ROLE']=="subadmin"){
    $sql="select `leave`.*, employee.username,employee.id as eid from `leave`,
    employee where  `leave`.employee_id=employee.id order by `leave`.id desc";
 }
+
 // if( $_SESSION['ROLE'] == $_SESSION['USER_ID'] ){ 
 //    $sql = "SELECT *
 //    FROM `leave` l
 //    JOIN employee e ON l.employee_id = e.id
 //    WHERE e.user_role = 'employee'";
 // }
+
 // display employee leave in employee panel
 if($_SESSION['ROLE']=="employee"){ 
 	$eid=$_SESSION['USER_ID'];

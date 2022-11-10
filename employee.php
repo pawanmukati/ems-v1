@@ -32,19 +32,20 @@ if($_SESSION['ROLE']=="subadmin" || $_SESSION['ROLE']=="admin"){
                               <table class="table table-responsive w-auto">
                                  <thead>
                                     <tr>
-                                       <th width="auto">S.No</th>
-                                       <th width="10%">Employee ID</th>
+                                       <!-- <th width="auto">S.No</th> -->
+                                       <th width="10%">Emp. ID</th>
                                        <th width="10%">User type</th>
                                        <th width="15%">Name</th>
                                        <th width="20%">Email</th>
                                        <th width="20%">Mobile</th>
                                        <th width="15%">Address</th>
+                                       <th width="15%">Active Status</th>
                                        <th width="auto"></th>
                                     </tr>
                                  </thead>
                                  <tbody>
                                     <?php 
-									$i=1;
+									// $i=1;
 									while($row=mysqli_fetch_assoc($res)){
                               $bdate = $row['birthday'];
                               $dojdate = $row['doj'];
@@ -52,18 +53,24 @@ if($_SESSION['ROLE']=="subadmin" || $_SESSION['ROLE']=="admin"){
                               $dojUpdatedate= date('d-m-Y', strtotime($dojdate));
                               ?>
                               <tr>
-                                 <td><?php echo $i?></td>
+                                 <!-- <td><?php echo $i?></td> -->
                                  <td><?php echo $row['employee_id']?></td>
                                  <td><?php echo $row['user_role']?></td>
                                  <td><?php echo $row['username']?></td>
                                  <td><?php echo $row['email']?></td>
                                  <td><?php echo $row['mobile']?></td>
                                  <td><?php echo $row['address']?></td>
+                                 <?php 
+                                 if(!$row['active_emp'] == 1){?>
+                                    <td><?php echo 'False' ?></td>
+                                 <?php } else{?>
+                                    <td><?php echo 'True' ?></td>
+                                 <?php } ?>
                                  <td><a class="btn btn-primary" href="employee_all_details.php?id=<?php echo $row['id']?>">More Details</a></td>
                                
                               </tr>
 									<?php 
-									$i++;
+									// $i++;
 									} ?>
                                  </tbody>
                               </table>

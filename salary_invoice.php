@@ -14,26 +14,21 @@ function fetch_data()
 
     $full_salary_row = mysqli_fetch_assoc($full_salary);
     $monthly_data_row = mysqli_fetch_assoc($monthly_data);
+
     $base_salary = $full_salary_row['basic_salary'];
     $HRA = $full_salary_row['hra'];
     $PT = $full_salary_row['pt'];
     $OA = $full_salary_row['oa'];
-    $gross_salary = ($base_salary + $HRA - $PT + $OA);
-    // echo $gross_salary;
-    //calculate ktotal unpaid days
+    $gross_salary = ($base_salary + $HRA + $OA);
+    //calculate total unpaid days
     $total_absent_days = $monthly_data_row['total_working_days'] - $monthly_data_row['present_days'];
     $total_unpaid_days = $total_absent_days - $monthly_data_row['paid_leaves'];
-
-    $total_gross_salary = ($gross_salary / 30) * (30 - $total_unpaid_days);
-    //   while($row = mysqli_fetch_array($monthly_data_row))  
-    //   {       
-    //       $output .= '<tr>  
-    //                           <td>'.$row["id"].'</td>  
-    //                           <td>'.$row["username"].'</td>  
-    //                           <td>'.$row["basic_salary"].'</td>  
-    //                      </tr>  
-    //                           ';  
-    //       }  
+    $total_leave_deduction_amount = $total_unpaid_days * $gross_salary/25;
+    $deduction = $total_leave_deduction_amount + $PT;
+    
+    $total_gross_salary = ($gross_salary / 25) * (25 - $total_unpaid_days);
+    
+    $net_salary =  $total_gross_salary - $deduction;
 
     return $output .= '
     <div class="text-center lh-1 mb-2 my-5">
@@ -66,34 +61,34 @@ function fetch_data()
                 <td>0.00</td>
             </tr>
             <tr>
-                <th scope="row">PT</th>
-                <td>' . $full_salary_row['pt'] . '</td>
-                <td>ESI</td>
-                <td>0.00</td>
-            </tr>
-            <tr>
                 <th scope="row">HRA</th>
                 <td>' . $full_salary_row['hra'] . '</td>
-                <td>TDS</td>
-                <td>0.00</td>
+                <td>PT</td>
+                <td>' . $full_salary_row['pt'] . '</td>
             </tr>
             <tr>
                 <th scope="row">OA</th>
                 <td>' . $full_salary_row['oa'] . '</td>
-                <td>LOP</td>
-                <td>0.00</td>
+                <td>Unpaid days</td>
+                <td>' . $total_absent_days .'</td>
+            </tr>
+            <tr>
+                <th scope="row">Paid Leaves</th>
+                <td>' . $monthly_data_row['paid_leaves'] . '</td>
             </tr>
             <tr class="border-top">
                 <th scope="row">Total Earning</th>
                 <td>' . $total_gross_salary . '</td>
                 <td>Total Deductions</td>
-                <td>0.00</td>
+                <td>'.$deduction.'</td>
             </tr>
+            
+       
         </tbody>
     </table>
 
     <div class="row">
-        <div class="col-md-4"> <br> <span class="fw-bold">Net Pay : ' . $total_gross_salary . '</span> </div>
+        <div class="col-md-4"> <br> <span class="fw-bold">Net Pay : ' . $net_salary . '</span> </div>
     </div>
     <div class="d-flex justify-content-end">
         <div class="d-flex flex-column mt-2"> <span class="fw-bolder">For Clver Monks</span> <span

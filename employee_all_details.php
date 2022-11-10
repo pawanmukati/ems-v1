@@ -12,9 +12,10 @@ if(isset($_GET['type']) && $_GET['type']=='delete' && isset($_GET['id'])){
 	mysqli_query($con,"delete from employee where id='$id'");
 }
 
+$Eid = $_GET['id'];
 // get employee 
 if($_SESSION['ROLE']=="subadmin" || $_SESSION['ROLE']=="admin"){
-   $res=mysqli_query($con,"select * from employee where user_role='employee' order by id asc ");
+   $res=mysqli_query($con,"select * from employee where user_role='employee'and id='$Eid' order by id asc ");
 }
 
 ?>

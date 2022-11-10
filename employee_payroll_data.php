@@ -49,7 +49,9 @@ if (isset($_GET["updation"])) {
     $message = '<label class="text-success">Product Updation Done</label>';
 }
 
-$query = "SELECT * FROM employee_payroll_data";
+// $query = "SELECT * FROM employee_payroll_data";
+$query="select `employee_payroll_data`.*, employee.username,employee.employee_id as eid from `employee_payroll_data`,
+employee where  `employee_payroll_data`.empid=employee.employee_id order by `employee_payroll_data`.id ";
 $result = mysqli_query($con, $query);
 ?>
 <!-- <!DOCTYPE html>
@@ -88,13 +90,14 @@ $result = mysqli_query($con, $query);
                               <table class="table table-responsive w-auto">
                                  <thead>
                                     <tr>
-                                       <th width="auto">S.No</th>
-                                       <th width="12%">Employee ID</th>
+                                       <!-- <th width="auto">S.No</th> -->
+                                       <th width="5%">EmpID</th>
+                                       <th width="12%">Username</th>
                                        <th width="10%">Months</th>
                                        <th width="12%">Working Days</th>
                                        <th width="12%">Present Days</th>
                                        <th width="5%">Leaves</th>
-                                       <th width="15%">Total Hours</th>
+                                       <th width="10%">Total Hours</th>
                                        <th width="auto">Paid Leaves</th>
                                        <th width="auto">Adjusments</th>
                                        <th width="auto"></th>
@@ -102,15 +105,16 @@ $result = mysqli_query($con, $query);
                                  </thead>
                                  <tbody>
                                     <?php 
-									$i=1;
+									// $i=1;
 									while($row=mysqli_fetch_assoc($result)){
                                         $_SESSION['EMP_ID']=$row['empid'];
                                         // echo $_SESSION['EMP_ID'];
                               ?>
                               <tr>
                                  
-                                <td><?php echo $i?></td>
+                                <!-- <td><?php echo $i?></td> -->
                                  <td><?php echo $row['empid']?></td>
+                                 <td><?php echo $row['username']?></td>
                                  <td><?php echo $row['months']?></td>
                                  <td><?php echo $row['total_working_days']?></td>
                                  <td><?php echo $row['present_days']?></td>
@@ -125,7 +129,7 @@ $result = mysqli_query($con, $query);
                                  </td>
                               </tr>
 									<?php 
-									$i++;
+									// $i++;
 									} ?>
                                  </tbody>
                               </table>
