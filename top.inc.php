@@ -120,7 +120,7 @@ if (!isset($_SESSION['ROLE'])) {
                      <li class="dropdown-submenu">
                         <a href="#" role="button" data-toggle="dropdown" data-target="#" >Categories</a>
                         <ul class="dropdown-submenu" role="menu" aria-labelledby="dropdownSubMenu">
-                           <li><a href="IT_categories.php">IT Assets</a></li>
+                           <li><a href="categories.php">IT Assets</a></li>
                            <li><a href="#">Non-IT Assets</a></li>
                            <!-- <li class="dropdown-submenu">
                               <a href="#">Even More..</a>
